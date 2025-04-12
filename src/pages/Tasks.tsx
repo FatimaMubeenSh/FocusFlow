@@ -1,7 +1,9 @@
+import TaskList from "../components/tasks/TaskList";
+
 const Tasks = () => {
   return (
     <div>
-      Tasks Page
+      <TaskList />
     </div>
   );
 }
