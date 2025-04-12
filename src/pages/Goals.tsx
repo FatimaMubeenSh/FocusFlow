@@ -1,7 +1,9 @@
+import GoalsList from "../components/goals/GoalList";
+
 const Goals = () => {
   return (
     <div>
-      Goals Page
+      <GoalsList />
     </div>
   );
 }
