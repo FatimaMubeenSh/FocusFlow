@@ -85,7 +85,11 @@ const PomodoroTimer: React.FC = () => {
             <CircularTimer timeLeft={timeLeft} totalTime={isSession ? sessionDuration * 60 : breakDuration * 60} onReset={handleReset} />
           </div>
           <div className="h-60 w-px bg-gray-300"></div>
-          <Controls sessionDuration={sessionDuration} breakDuration={breakDuration} onSessionChange={setSessionDuration} onBreakChange={setBreakDuration} onStart={handleStart} isRunning={isRunning} canAdjustTime={canAdjustTime} />
+          <div className="flex flex-1 flex-col gap-4 items-center">
+            <Controls interval="session" intervalDuration={sessionDuration} onIntervalChange={setSessionDuration} canAdjustTime={canAdjustTime} onStart={handleStart} isRunning={isRunning} />
+
+            <Controls interval="break" intervalDuration={breakDuration} onIntervalChange={setBreakDuration} canAdjustTime={canAdjustTime} onStart={handleStart} isRunning={isRunning} />
+          </div>
         </div>
       </div>
       <ProgressTracker />
