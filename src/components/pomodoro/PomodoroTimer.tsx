@@ -5,8 +5,16 @@ import ProgressTracker from "./ProgressTracker";
 import StreakStats from "./StreakStats";
 
 const PomodoroTimer: React.FC = () => {
-  const [sessionDuration, setSessionDuration] = useState(25);
-  const [breakDuration, setBreakDuration] = useState(5);
+  const SESSION_DURATION_KEY = "focusflow_session_duration";
+  const BREAK_DURATION_KEY = "focusflow_break_duration";
+  const DEFAULT_SESSION_DURATION = 25; // in minutes
+  const DEFAULT_BREAK_DURATION = 5; // in minutes
+  const [sessionDuration, setSessionDuration] = useState(
+    parseInt(localStorage.getItem(SESSION_DURATION_KEY) || "") || DEFAULT_SESSION_DURATION
+  );
+  const [breakDuration, setBreakDuration] = useState(
+    parseInt(localStorage.getItem(BREAK_DURATION_KEY) || "") || DEFAULT_BREAK_DURATION
+  );
   const [isRunning, setIsRunning] = useState(false);
   const [isSession, setIsSession] = useState(true);
   const [timeLeft, setTimeLeft] = useState(sessionDuration * 60);
@@ -37,6 +45,11 @@ const PomodoroTimer: React.FC = () => {
   useEffect(() => {
     setTimeLeft(isSession ? sessionDuration * 60 : breakDuration * 60);
   }, [sessionDuration, breakDuration, isSession]);
+
+  useEffect(() => {
+    localStorage.setItem(SESSION_DURATION_KEY, sessionDuration.toString());
+    localStorage.setItem(BREAK_DURATION_KEY, breakDuration.toString());
+  }, [sessionDuration, breakDuration]);
 
   const handleStart = (type: "session" | "break") => {
     if (isRunning) return;
