@@ -60,12 +60,9 @@ const PomodoroTimer: React.FC = () => {
   const handleComplete = () => {
     handleReset();
     if (isSession) {
-      console.log("Session completed!");
       const today = new Date().toDateString();
       const stored = JSON.parse(localStorage.getItem("focusflow_sessions") || "{}");
-      console.log(stored);
       stored[today] = (stored[today] || 0) + 1;
-      console.log("stored count is:", stored);
       localStorage.setItem("focusflow_sessions", JSON.stringify(stored));
     }
   };
