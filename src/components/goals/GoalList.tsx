@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import GoalForm from "./GoalInput";
 import GoalAccordion from "./GoalAccordion";
 import { Goal } from "../../types/Goal";

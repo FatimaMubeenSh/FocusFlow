@@ -1,7 +1,9 @@
+import PomodoroTimer from "../components/pomodoro/PomodoroTimer";
+
 const Pomodoro = () => {
   return (
     <div>
-      Pomodoro Page
+      <PomodoroTimer />
     </div>
   );
 }
