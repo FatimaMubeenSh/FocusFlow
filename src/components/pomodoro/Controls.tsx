@@ -1,21 +1,30 @@
-import TimerInput from "./TimerInput";
+import { Plus, Minus, PlayIcon } from "lucide-react";
 
 interface Props {
-  sessionDuration: number;
-  breakDuration: number;
-  onSessionChange: (val: number) => void;
-  onBreakChange: (val: number) => void;
+  interval: string;
+  intervalDuration: number;
+  onIntervalChange: (val: number) => void;
+  canAdjustTime: boolean;
   onStart: (type: "session" | "break") => void;
   isRunning: boolean;
-  canAdjustTime: boolean;
 }
 
-const Controls: React.FC<Props> = ({ sessionDuration, breakDuration, onSessionChange, onBreakChange, onStart, isRunning, canAdjustTime }) => {
+const Controls: React.FC<Props> = ({ intervalDuration, onIntervalChange, canAdjustTime, onStart, isRunning, interval }) => {
   return (
-    <div className="flex flex-1 flex-col gap-4 items-center">
-      <TimerInput interval="session" intervalDuration={sessionDuration} onIntervalChange={onSessionChange} canAdjustTime={canAdjustTime} onStart={onStart} isRunning={isRunning} />
-
-      <TimerInput interval="break" intervalDuration={breakDuration} onIntervalChange={onBreakChange} canAdjustTime={canAdjustTime} onStart={onStart} isRunning={isRunning} />
+    <div>
+      <h2 className={`text-lg font-semibold capitalize text-center mx-auto mb-2 ${interval == "break" ? "mt-4" : ""}`}>{interval} Duration</h2>
+      <div className="flex items-center gap-4">
+        <button onClick={() => onStart(interval as "session" | "break")} disabled={isRunning}>
+          <PlayIcon fill="#3385e4" strokeWidth={0} className="w-8 h-8" />
+        </button>
+        <button disabled={!canAdjustTime} onClick={() => onIntervalChange(intervalDuration + 1)} className="px-2 py-1 bg-green-100 rounded disabled:opacity-50">
+          <Plus />
+        </button>
+        <span>{intervalDuration} min</span>
+        <button disabled={!canAdjustTime || intervalDuration <= 1} onClick={() => onIntervalChange(intervalDuration - 1)} className="px-2 py-1 bg-red-100 rounded disabled:opacity-50">
+          <Minus />
+        </button>
+      </div>
     </div>
   );
 };

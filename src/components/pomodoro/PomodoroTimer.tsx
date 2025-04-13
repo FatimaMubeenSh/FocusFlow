@@ -5,8 +5,16 @@ import ProgressTracker from "./ProgressTracker";
 import StreakStats from "./StreakStats";
 
 const PomodoroTimer: React.FC = () => {
-  const [sessionDuration, setSessionDuration] = useState(25);
-  const [breakDuration, setBreakDuration] = useState(5);
+  const SESSION_DURATION_KEY = "focusflow_session_duration";
+  const BREAK_DURATION_KEY = "focusflow_break_duration";
+  const DEFAULT_SESSION_DURATION = 25; // in minutes
+  const DEFAULT_BREAK_DURATION = 5; // in minutes
+  const [sessionDuration, setSessionDuration] = useState(
+    parseInt(localStorage.getItem(SESSION_DURATION_KEY) || "") || DEFAULT_SESSION_DURATION
+  );
+  const [breakDuration, setBreakDuration] = useState(
+    parseInt(localStorage.getItem(BREAK_DURATION_KEY) || "") || DEFAULT_BREAK_DURATION
+  );
   const [isRunning, setIsRunning] = useState(false);
   const [isSession, setIsSession] = useState(true);
   const [timeLeft, setTimeLeft] = useState(sessionDuration * 60);
@@ -38,6 +46,11 @@ const PomodoroTimer: React.FC = () => {
     setTimeLeft(isSession ? sessionDuration * 60 : breakDuration * 60);
   }, [sessionDuration, breakDuration, isSession]);
 
+  useEffect(() => {
+    localStorage.setItem(SESSION_DURATION_KEY, sessionDuration.toString());
+    localStorage.setItem(BREAK_DURATION_KEY, breakDuration.toString());
+  }, [sessionDuration, breakDuration]);
+
   const handleStart = (type: "session" | "break") => {
     if (isRunning) return;
     setIsSession(type === "session");
@@ -47,12 +60,9 @@ const PomodoroTimer: React.FC = () => {
   const handleComplete = () => {
     handleReset();
     if (isSession) {
-      console.log("Session completed!");
       const today = new Date().toDateString();
       const stored = JSON.parse(localStorage.getItem("focusflow_sessions") || "{}");
-      console.log(stored);
       stored[today] = (stored[today] || 0) + 1;
-      console.log("stored count is:", stored);
       localStorage.setItem("focusflow_sessions", JSON.stringify(stored));
     }
   };
@@ -72,7 +82,11 @@ const PomodoroTimer: React.FC = () => {
             <CircularTimer timeLeft={timeLeft} totalTime={isSession ? sessionDuration * 60 : breakDuration * 60} onReset={handleReset} />
           </div>
           <div className="h-60 w-px bg-gray-300"></div>
-          <Controls sessionDuration={sessionDuration} breakDuration={breakDuration} onSessionChange={setSessionDuration} onBreakChange={setBreakDuration} onStart={handleStart} isRunning={isRunning} canAdjustTime={canAdjustTime} />
+          <div className="flex flex-1 flex-col gap-4 items-center">
+            <Controls interval="session" intervalDuration={sessionDuration} onIntervalChange={setSessionDuration} canAdjustTime={canAdjustTime} onStart={handleStart} isRunning={isRunning} />
+
+            <Controls interval="break" intervalDuration={breakDuration} onIntervalChange={setBreakDuration} canAdjustTime={canAdjustTime} onStart={handleStart} isRunning={isRunning} />
+          </div>
         </div>
       </div>
       <ProgressTracker />
