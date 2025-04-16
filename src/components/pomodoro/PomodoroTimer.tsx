@@ -1,8 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import CircularTimer from "./CircularTimer";
 import Controls from "./Controls";
-import ProgressTracker from "./ProgressTracker";
-import StreakStats from "./StreakStats";
 
 const PomodoroTimer: React.FC = () => {
   const SESSION_DURATION_KEY = "focusflow_session_duration";
@@ -75,13 +73,13 @@ const PomodoroTimer: React.FC = () => {
   const canAdjustTime = !isRunning;
 
   return (
-    <div className="p-4">
-      <div className="bg-white shadow-md rounded-lg p-4 w-full md:w-4/5 lg:w-3/5 mx-auto">
+      <div className="card w-full md:w-4/5 lg:w-3/5 mx-auto">
         <div className="flex items-center gap-4">
           <div className="flex flex-1 flex-col items-center">
-            <CircularTimer timeLeft={timeLeft} totalTime={isSession ? sessionDuration * 60 : breakDuration * 60} onReset={handleReset} />
+            <h2 className="text-2xl font-semibold mb-4">{isSession ? "Session" : "Break"}</h2>
+            <CircularTimer timeLeft={timeLeft} totalTime={isSession ? sessionDuration * 60 : breakDuration * 60} onReset={handleReset} isTimerRunning={isRunning} />
           </div>
-          <div className="h-60 w-px bg-gray-300"></div>
+          <div className="divider h-60 w-px bg-gray-300"></div>
           <div className="flex flex-1 flex-col gap-4 items-center">
             <Controls interval="session" intervalDuration={sessionDuration} onIntervalChange={setSessionDuration} canAdjustTime={canAdjustTime} onStart={handleStart} isRunning={isRunning} />
 
@@ -89,9 +87,6 @@ const PomodoroTimer: React.FC = () => {
           </div>
         </div>
       </div>
-      <ProgressTracker />
-      <StreakStats />
-    </div>
   );
 };
 

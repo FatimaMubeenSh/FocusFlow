@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import GoalForm from "./GoalInput";
 import GoalAccordion from "./GoalAccordion";
 import { Goal } from "../../types/Goal";
 import { v4 as uuidv4 } from "uuid";
+import GoalInput from "./GoalInput";
 
 const LOCAL_STORAGE_KEY = "focusflow_goals";
 
@@ -41,17 +41,24 @@ const GoalsList = () => {
     setGoals(goals.map((g) => (g.id === updatedGoal.id ? updatedGoal : g)));
   };
 
-  const handleProgressChange = (id: string, progress: number) => {
-    setGoals(goals.map((g) => (g.id === id ? { ...g, progress } : g)));
-  };
-
   return (
     <div>
-      <GoalForm onAdd={handleAdd} />
-      <h2 className="text-xl font-bold mb-4 text-center text-blue-700">Current Goals</h2>
-      {goals.map((goal) => (
-        <GoalAccordion key={goal.id} goal={goal} isExpanded={expandedId === goal.id} onToggle={() => setExpandedId(expandedId === goal.id ? null : goal.id)} onDelete={() => handleDelete(goal.id)} onUpdate={handleUpdate} onProgressChange={handleProgressChange} />
-      ))}
+      <GoalInput onAdd={handleAdd} />
+      <h2 className="text-xl font-bold mb-4 text-center text-purple-600">Current Goals</h2>
+      {goals.length === 0 ? (
+      <p className="text-default">No goals yet. Add a new goal to get started!</p>
+      ) : (
+      goals.map((goal) => (
+        <GoalAccordion
+        key={goal.id}
+        goal={goal}
+        isExpanded={expandedId === goal.id}
+        onToggle={() => setExpandedId(expandedId === goal.id ? null : goal.id)}
+        onDelete={() => handleDelete(goal.id)}
+        onUpdate={handleUpdate}
+        />
+      ))
+      )}
     </div>
   );
 };
