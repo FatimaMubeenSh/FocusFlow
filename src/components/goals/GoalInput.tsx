@@ -10,6 +10,7 @@ const GoalInput: React.FC<Props> = ({ onAdd }) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    // TODO: Add Toast message for empty fields
     if (!title || !dueDate) return;
     onAdd({ title, dueDate });
     setTitle("");
@@ -17,7 +18,7 @@ const GoalInput: React.FC<Props> = ({ onAdd }) => {
   };
 
   return (
-    <div className="bg-white shadow-md rounded p-4 mt-4 mb-6 w-full md:w-3/4 lg:w-1/2 mx-auto">
+    <div className="card mt-4 mb-6 w-full md:w-4/5 lg:w-3/5 mx-auto">
       <form className="flex items-center gap-4" onSubmit={handleSubmit}>
         <input placeholder="Add Goal Title" value={title} onChange={(e) => setTitle(e.target.value)} className="flex-1 border  border-gray-300 px-3 py-2 rounded" />
         <input
@@ -31,7 +32,7 @@ const GoalInput: React.FC<Props> = ({ onAdd }) => {
           }}
           min={new Date().toISOString().split("T")[0]} // Disable back date selection
         />
-        <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded">
+        <button type="submit" className="btn">
           Add
         </button>
       </form>
