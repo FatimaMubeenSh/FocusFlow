@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 interface Props {
   onAdd: (goal: { title: string; dueDate: string }) => void;
@@ -10,8 +11,10 @@ const GoalInput: React.FC<Props> = ({ onAdd }) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Add Toast message for empty fields
-    if (!title || !dueDate) return;
+    if (!title || !dueDate) {
+      toast.warn("Please fill in all fields.");
+      return;
+    }
     onAdd({ title, dueDate });
     setTitle("");
     setDueDate("");

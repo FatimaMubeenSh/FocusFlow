@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import CircularTimer from "./CircularTimer";
 import Controls from "./Controls";
+import ProgressTracker from "./ProgressTracker";
 
 const PomodoroTimer: React.FC = () => {
   const SESSION_DURATION_KEY = "focusflow_session_duration";
@@ -13,6 +14,7 @@ const PomodoroTimer: React.FC = () => {
   const [breakDuration, setBreakDuration] = useState(
     parseInt(localStorage.getItem(BREAK_DURATION_KEY) || "") || DEFAULT_BREAK_DURATION
   );
+  const [streakCount, setStreakCount] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
   const [isSession, setIsSession] = useState(true);
   const [timeLeft, setTimeLeft] = useState(sessionDuration * 60);
@@ -49,6 +51,12 @@ const PomodoroTimer: React.FC = () => {
     localStorage.setItem(BREAK_DURATION_KEY, breakDuration.toString());
   }, [sessionDuration, breakDuration]);
 
+  useEffect(() => {
+    const today = new Date().toDateString();
+    const stored = JSON.parse(localStorage.getItem("focusflow_sessions") || "{}");
+    setStreakCount(stored[today] || 0);
+  }, []);
+
   const handleStart = (type: "session" | "break") => {
     if (isRunning) return;
     setIsSession(type === "session");
@@ -62,6 +70,7 @@ const PomodoroTimer: React.FC = () => {
       const stored = JSON.parse(localStorage.getItem("focusflow_sessions") || "{}");
       stored[today] = (stored[today] || 0) + 1;
       localStorage.setItem("focusflow_sessions", JSON.stringify(stored));
+      setStreakCount(stored[today]);
     }
   };
 
@@ -73,6 +82,7 @@ const PomodoroTimer: React.FC = () => {
   const canAdjustTime = !isRunning;
 
   return (
+    <div>
       <div className="card w-full md:w-4/5 lg:w-3/5 mx-auto">
         <div className="flex items-center gap-4">
           <div className="flex flex-1 flex-col items-center">
@@ -87,6 +97,8 @@ const PomodoroTimer: React.FC = () => {
           </div>
         </div>
       </div>
+      <ProgressTracker count={streakCount} />
+    </div>
   );
 };
 

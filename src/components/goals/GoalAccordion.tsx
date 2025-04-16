@@ -21,7 +21,7 @@ const GoalAccordion: React.FC<Props> = ({ goal, isExpanded, onToggle, onDelete, 
   const handleDescriptionChange = (value: string) => {
     onUpdate({ ...goal, description: value });
     setDescription(value);
-  }
+  };
 
   const handleSave = () => {
     onUpdate({ ...goal, title: editTitle, dueDate: editDate, description, progress });
@@ -40,16 +40,18 @@ const GoalAccordion: React.FC<Props> = ({ goal, isExpanded, onToggle, onDelete, 
   };
 
   return (
-    <div className={`shadow-md rounded-xl mb-4 w-full md:w-3/5 lg:w-2/3 mx-auto ${isExpanded ? "bg-purple-300 p-8" : "card"} transition-all`}>
-      <div className="flex justify-between items-center cursor-pointer" onClick={onToggle}>
-        <div className="card-header">{goal.title}</div>
-        <div className="text-secondary flex gap-4">
+    <div className={`shadow-md rounded-xl mb-4 w-full md:w-5/6 lg:w-2/3 mx-auto ${isExpanded ? "bg-purple-300 p-8" : "card"} transition-all`}>
+      <div className="grid grid-cols-2 justify-between items-center cursor-pointer" onClick={onToggle}>
+        <div className="card-header" title={goal.title}>
+          {goal.title.length > 35 ? goal.title.slice(0, 35) + "..." : goal.title}
+        </div>
+        <div className="text-secondary flex justify-around gap-4">
           <span>Due By: {format(new Date(goal.dueDate), "dd MMM, yyyy")}</span>
           {goal.progress < 100 ? <span>{new Date(goal.dueDate) > new Date() ? `${formatDistanceToNowStrict(new Date(goal.dueDate), { addSuffix: false })} Left` : `${formatDistanceToNowStrict(new Date(goal.dueDate), { addSuffix: false })} Over`}</span> : <span>Completed</span>}
           <span>{goal.progress}% Done</span>
-        </div>
-        <div className={`transform transition-transform duration-300 ease-in-out ${isExpanded ? "rotate-180" : "rotate-0"}`}>
-          <ChevronDown className={`cursor-pointer ${isExpanded ? "text-black" : "text-purple-600"}`} />
+          <div className={`transform transition-transform duration-300 ease-in-out ${isExpanded ? "rotate-180" : "rotate-0"}`}>
+            <ChevronDown className={`cursor-pointer ${isExpanded ? "text-black" : "text-purple-600"}`} />
+          </div>
         </div>
       </div>
 

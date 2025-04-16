@@ -1,6 +1,6 @@
 
 interface IconButtonProps {
-  icon: React.ReactNode;
+  icon?: React.ReactNode;
   onClick: () => void;
   ariaLabel: string;
   className?: string;
@@ -11,7 +11,7 @@ interface IconButtonProps {
 const IconButton: React.FC<IconButtonProps> = ({ icon, onClick, ariaLabel, className, text, disabled }) => {
   return (
     <button onClick={onClick} aria-label={ariaLabel}  className={`flex btn btn-icon ${disabled ? 'disabled': ""} focus:outline-none focus:ring-2 focus:ring-gray-200 ${className}`}>
-      { icon }{text && <span className="mx-2">{text}</span>}
+      { icon }{text && <span className={`${icon ? "mx-2": " "}`}>{text}</span>}
     </button>
   );
 };
