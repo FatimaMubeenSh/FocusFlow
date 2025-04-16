@@ -1,4 +1,4 @@
-import CustomCalendar from "../CustomCalendar";
+import CustomCalendar from "../ui/CustomCalendar";
 import logo from "../../assets/logo.png";
 
 const Header = () => {
@@ -36,7 +36,9 @@ const Header = () => {
         <div className="text-xs text-purple-600">Week {weekNumber} of the year</div>
       </div>
 
-      <CustomCalendar />
+      <div className="mr-2">
+        <CustomCalendar />
+      </div>
     </header>
   );
 };
