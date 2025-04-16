@@ -37,8 +37,8 @@ const TaskCard: React.FC<TaskCardProps> = ({ task, onDelete, onEdit }) => {
         </div>
       ) : (
         <div className={`bg-white text-gray-800 rounded-md shadow px-4 mb-2 py-3 ${task.type === "key" ? "" : "border border-gray-200"}`}>
-          <h3 className="font-semibold text-lg" title={task.title}>
-            {task.title.length > 30 ? task.title.slice(0, 30) + "..." : task.title}
+          <h3 className="font-semibold" title={task.title}>
+            {task.title.length > 25 ? task.title.slice(0, 25) + "..." : task.title}
           </h3>
           <p className="text-sm text-gray-500 mt-1">{task.timestamp}</p>
           <div className="flex gap-2 mt-2 justify-end">
