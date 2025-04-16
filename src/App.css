@@ -2,5 +2,57 @@
 @import "tailwindcss";
 
 body {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Poppins', sans-serif, Arial, Helvetica;
+}
+
+/* Custom reusable utility classes */
+/* ----------- Buttons ---------------- */
+.btn {
+  @apply py-2 px-4 bg-purple-500 text-white rounded hover:bg-purple-600 transition cursor-pointer;
+}
+
+.btn.btn-icon {
+  @apply rounded-2xl shadow-md p-2;
+}
+
+.btn:disabled, .btn.disabled {
+  @apply bg-purple-300 hover:bg-purple-300 text-gray-200 cursor-not-allowed;
+}
+
+.btn-success {
+  @apply bg-green-400 text-white rounded-2xl hover:bg-green-500 transition cursor-pointer;
+}
+.btn-success:disabled, .btn-success.disabled {
+  @apply bg-green-300 hover:bg-green-300 text-gray-200 cursor-not-allowed;
+}
+
+.btn-danger {
+  @apply bg-red-400 text-white rounded-2xl hover:bg-red-500 transition cursor-pointer;
+}
+.btn-danger:disabled, .btn-danger.disabled {
+  @apply bg-red-300 hover:bg-red-300 text-gray-200 cursor-not-allowed;
+}
+
+/* ----------- Cards ---------------- */
+
+.card {
+  @apply bg-white p-4 rounded-xl shadow-md border border-gray-200;
+}
+
+.card-header {
+  @apply text-lg font-semibold text-gray-700;
+} 
+
+.card-metric {
+  @apply text-3xl font-bold;
+}
+
+/* ----------- text ---------------- */
+
+.text-secondary {
+  @apply text-sm text-gray-500;
+}
+
+.text-default {
+  @apply text-gray-500 text-center mx-auto;
 }

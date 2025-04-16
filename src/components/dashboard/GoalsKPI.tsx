@@ -12,21 +12,21 @@ const GoalsKPI = () => {
   const progressPercent = totalGoals ? Math.round((completedGoals / totalGoals) * 100) : 0;
 
   return (
-    <div className="bg-white p-4 rounded-xl shadow-md">
-      <h2 className="text-lg font-semibold mb-2">Goals</h2>
+    <div className="card">
+      <h2 className="card-header">Goals</h2>
 
       <div className="flex justify-around items-center mt-3">
         <div className="text-center">
           <p className="text-sm text-gray-500">Total</p>
-          <p className="text-2xl font-bold text-gray-700">{totalGoals}</p>
+          <p className="card-metric text-gray-700">{totalGoals}</p>
         </div>
         <div className="text-center">
           <p className="text-sm text-green-500">Completed</p>
-          <p className="text-2xl font-bold text-green-500">{completedGoals}</p>
+          <p className="card-metric text-green-500">{completedGoals}</p>
         </div>
         <div className="text-center">
           <p className="text-sm text-blue-500">In Progress</p>
-          <p className="text-2xl font-bold text-blue-500">{inProgressGoals}</p>
+          <p className="card-metric text-blue-500">{inProgressGoals}</p>
         </div>
       </div>
 
@@ -37,7 +37,7 @@ const GoalsKPI = () => {
       )}
 
       <div className="mt-4 text-center">
-        <p className="text-sm text-gray-500">Overall Progress</p>
+        <p className="text-secondary">Overall Progress</p>
         <p className="text-xl font-semibold text-indigo-600">{progressPercent}%</p>
       </div>
     </div>
