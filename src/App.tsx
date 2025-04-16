@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import Tasks from './pages/Tasks';
 import Goals from './pages/Goals';
 import Pomodoro from './pages/Pomodoro';
+import { ToastContainer } from 'react-toastify';
 
 function App() {
 
@@ -17,6 +18,7 @@ function App() {
           <Route path="/goals" element={<Goals />} />
           <Route path="/pomodoro" element={<Pomodoro />} />
         </Routes>
+        <ToastContainer position="top-center" autoClose={2000} pauseOnHover hideProgressBar={false} theme="colored" />
       </Layout>
     </>
   );
