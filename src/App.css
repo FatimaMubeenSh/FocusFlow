@@ -11,6 +11,10 @@ body {
   @apply py-2 px-4 bg-purple-500 text-white rounded hover:bg-purple-600 transition cursor-pointer;
 }
 
+.btn-sm {
+  @apply px-2 text-sm;
+}
+
 .btn.btn-icon {
   @apply rounded-2xl shadow-md p-2;
 }
@@ -55,4 +59,8 @@ body {
 
 .text-default {
   @apply text-gray-500 text-center mx-auto;
+}
+
+.form-container {
+  @apply mt-4 mb-6 w-full md:w-4/5 lg:w-3/5 mx-auto;
 }
