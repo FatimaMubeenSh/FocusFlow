@@ -1,5 +1,6 @@
 import TaskCard from "./TaskCard";
 import { Task } from "../../types/Task";
+import IconButton from "../ui/IconButton";
 
 interface TaskSectionProps {
   type?: string;
@@ -14,17 +15,18 @@ const TaskSection: React.FC<TaskSectionProps> = ({ type = "secondary", tasks = [
   const filteredTasks = tasks.filter((t) => t.type === type);
   const taskCount = filteredTasks.length;
   const isKeyTask = type === "key";
+  const isEmpty = filteredTasks.length === 0;
 
   const containerClasses = `
-    rounded-xl py-2 px-4 shadow ${isKeyTask ? "bg-gradient-to-r from-teal-400 to-blue-500 text-white" : "bg-white text-gray-800"} ${className}
+    rounded-xl py-2 px-4 shadow ${isKeyTask ? "bg-gradient-to-br from-purple-600 to-purple-400 text-white" : "bg-white text-gray-800"} ${className}
   `;
 
   const countClasses = `
-    px-2 py-0.5 rounded-full ml-2 ${isKeyTask ? "bg-white text-blue-600" : "bg-gray-200 text-gray-800"}
+    w-6 h-6 ml-2 flex items-center justify-center rounded-full text-sm ${isKeyTask ? "bg-white text-purple-600" : "bg-purple-200 text-gray-800"}
   `;
 
   const gridClasses = `
-    mt-4 grid gap-4 grid-cols-[repeat(auto-fill,minmax(250px,1fr))]
+    mt-4 grid gap-4 grid-cols-[repeat(auto-fill,minmax(280px,1fr))]
   `;
 
   return (
@@ -32,19 +34,21 @@ const TaskSection: React.FC<TaskSectionProps> = ({ type = "secondary", tasks = [
       <div className="flex justify-between items-center">
         <div className="flex">
           <h2 className="text-xl font-semibold">{type === "key" ? "Key Tasks" : "Secondary Tasks"}</h2>
-          <span className={countClasses}>{taskCount}</span>
+            <span className={countClasses}>{taskCount}</span>
         </div>
-        <button className="bg-red-500 px-3 py-1 rounded text-sm text-white" onClick={() => onClear(type as "key" | "secondary")}>
-          Clear
-        </button>
+        <IconButton onClick={() => onClear(type as "key" | "secondary")} ariaLabel={`Clear ${type} Tasks`} text="Clear" className="btn-danger btn-sm" disabled={isEmpty} />
       </div>
 
-      <hr className="mt-2" />
+      <hr className="mt-1" />
 
-      <div className={gridClasses}>
-        {filteredTasks.map((task) => (
-          <TaskCard key={task.id} task={task} onDelete={onDelete} onEdit={onEdit} />
-        ))}
+      <div className={`${isEmpty ? "" : gridClasses}`}>
+        {!isEmpty ? (
+          filteredTasks.map((task) => (
+            <TaskCard key={task.id} task={task} onDelete={onDelete} onEdit={onEdit} />
+          ))
+        ) : (
+          <p className={`text-center py-4 ${isKeyTask ? "text-white":"text-gray-500"} mx-auto`}>No tasks available.</p>
+        )}
       </div>
     </div>
   );
