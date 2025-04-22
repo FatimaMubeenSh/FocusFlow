@@ -5,7 +5,7 @@
 ![TailwindCSS](https://img.shields.io/badge/TailwindCSS-38b2ac?logo=tailwindcss&logoColor=white)
 ![Deployed on Netlify](https://img.shields.io/badge/Deployed-Netlify-00C7B7?logo=netlify&logoColor=white)
 
-FocusFlow is a simple and sleek productivity app that helps you stay focused, set goals, and track your daily progress using the Pomodoro technique. Built with **React**, **TypeScript**, and **Tailwind CSS**. All data is saved locally, so it's lightweight and works offline! 🧠✨
+FocusFlow is a simple and sleek productivity app that helps to manage tasks, set goals, and stay focused using the Pomodoro technique. Built with **React**, **TypeScript**, and **Tailwind CSS**. All data is saved locally, so it's lightweight and works offline! 🧠✨
 
 ## 🔧 Features
 
@@ -23,7 +23,7 @@ FocusFlow is a simple and sleek productivity app that helps you stay focused, se
 ## 📦 Tech Stack
 
 - ⚛️ React + TypeScript
-- 💨 Tailwind CSS
+- 🎨 Tailwind CSS
 - 🧠 LocalStorage for persistence
 - 🔔 React Toastify (notifications)
 - 🎨 Lucide Icons
