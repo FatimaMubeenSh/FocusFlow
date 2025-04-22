@@ -68,7 +68,7 @@ const QuoteCard = () => {
         <p>Loading quote...</p>
       ) : (
         <>
-          <p className="text-2xl font-bold text-center">"{quote.quoteText}"</p>
+          <p className="text-xl md:text-2xl font-bold text-center">"{quote.quoteText}"</p>
           <p className="text-sm text-gray-600">- {quote.quoteAuthor}</p>
         </>
       )}

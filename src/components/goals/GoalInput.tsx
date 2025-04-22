@@ -28,7 +28,7 @@ const GoalInput: React.FC<Props> = ({ onAdd }) => {
           type="date"
           value={dueDate}
           onChange={(e) => setDueDate(e.target.value)}
-          className="border border-gray-300 px-3 py-2 rounded"
+          className="border border-gray-300 px-3 py-2 rounded shrink-0"
           onClick={(e) => {
             const input = e.target as HTMLInputElement;
             input.showPicker && input.showPicker();
