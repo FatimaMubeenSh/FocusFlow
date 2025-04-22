@@ -9,10 +9,12 @@ interface Quote {
 const QuoteCard = () => {
   const [quote, setQuote] = useState<Quote>({ quoteText: "", quoteAuthor: "" });
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [scriptElement, setScriptElement] = useState<HTMLScriptElement | null>(null);
 
   const fetchQuote = () => {
     setLoading(true);
+    setError(null);
     const callbackName = `jsonp_${Date.now()}`;
 
     // Clean up previous script if exists
@@ -27,11 +29,16 @@ const QuoteCard = () => {
         document.body.removeChild(scriptElement);
       }
 
-      setQuote({
-        quoteText: data.quoteText,
-        quoteAuthor: data.quoteAuthor || "Unknown",
-      });
-      setLoading(false);
+      if (data && data.quoteText) {
+        setQuote({
+          quoteText: data.quoteText,
+          quoteAuthor: data.quoteAuthor || "Unknown",
+        });
+        setLoading(false);
+      } else {
+        setError("Failed to fetch quote. Please try again later.");
+        setLoading(false);
+      }
     };
 
     // Create new script element
@@ -42,8 +49,8 @@ const QuoteCard = () => {
       if (document.body.contains(script)) {
         document.body.removeChild(script);
       }
+      setError("Failed to fetch quote. Please try again later.");
       setLoading(false);
-      console.error("Failed to load quote");
     };
 
     document.body.appendChild(script);
@@ -66,6 +73,8 @@ const QuoteCard = () => {
     <div className="bg-white shadow-md rounded-lg p-4 flex flex-col items-center justify-center h-64 gap-4">
       {loading ? (
         <p>Loading quote...</p>
+      ) : error ? (
+        <p className="text-red-500">{error}</p>
       ) : (
         <>
           <p className="text-xl md:text-2xl font-bold text-center">"{quote.quoteText}"</p>
