@@ -17,6 +17,8 @@ const GoalAccordion: React.FC<Props> = ({ goal, isExpanded, onToggle, onDelete, 
   const [isEditing, setIsEditing] = useState(false);
   const [editTitle, setEditTitle] = useState(goal.title);
   const [editDate, setEditDate] = useState(goal.dueDate);
+  const dueDate = new Date(goal.dueDate);
+  const isOverdue = dueDate <= new Date();
 
   const handleDescriptionChange = (value: string) => {
     onUpdate({ ...goal, description: value });
@@ -47,7 +49,11 @@ const GoalAccordion: React.FC<Props> = ({ goal, isExpanded, onToggle, onDelete, 
         </div>
         <div className="text-secondary flex justify-around gap-4">
           <span>Due By: {format(new Date(goal.dueDate), "dd MMM, yyyy")}</span>
-          {goal.progress < 100 ? <span>{new Date(goal.dueDate) > new Date() ? `${formatDistanceToNowStrict(new Date(goal.dueDate), { addSuffix: false })} Left` : `${formatDistanceToNowStrict(new Date(goal.dueDate), { addSuffix: false })} Over`}</span> : <span>Completed</span>}
+          {goal.progress < 100 ?
+            <span className={isOverdue ? "text-red-500" : ""}>
+              {`${formatDistanceToNowStrict(dueDate, { addSuffix: false })} ${isOverdue ? "Over" : "Left"}`}
+            </span> :
+            <span className="text-green-500">Completed</span>}
           <span>{goal.progress}% Done</span>
           <div className={`transform transition-transform duration-300 ease-in-out ${isExpanded ? "rotate-180" : "rotate-0"}`}>
             <ChevronDown className={`cursor-pointer ${isExpanded ? "text-black" : "text-purple-600"}`} />
