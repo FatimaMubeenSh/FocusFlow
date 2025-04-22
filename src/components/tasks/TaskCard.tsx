@@ -40,7 +40,7 @@ const TaskCard: React.FC<TaskCardProps> = ({ task, onDelete, onEdit }) => {
           <h3 className="font-semibold" title={task.title}>
             {task.title.length > 25 ? task.title.slice(0, 25) + "..." : task.title}
           </h3>
-          <p className="text-sm text-gray-500 mt-1">{task.timestamp}</p>
+          <p className="text-sm text-gray-500 mt-1">{new Date(task.timestamp).toLocaleString()}</p>
           <div className="flex gap-2 mt-2 justify-end">
             <Pencil size={18} className="text-purple-500 cursor-pointer" onClick={() => setIsEditing(true)} />
             <Trash2 size={18} className="text-red-500 cursor-pointer" onClick={() => onDelete(task.id)} />
